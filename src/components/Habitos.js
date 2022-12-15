@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export default function Hoje(){
-    return(<ContainerHoje></ContainerHoje>);
+export default function Habitos(){
+    return(<ContainerHabitos></ContainerHabitos>);
 }
 
-const ContainerHoje = styled.div`
+const ContainerHabitos = styled.div`
     width: 100%;
     height: 100vh;
     padding: 70px 0px;

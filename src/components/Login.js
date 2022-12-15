@@ -10,22 +10,23 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login(){
     const [clicado, setClicado] = useState(false);
-    const {usuario, setUsuario} = useContext(UsuarioContext);
+    const [login, setLogin] = useState({email: "", password: ""});
+    const {setUsuario} = useContext(UsuarioContext);
     const navigate = useNavigate();
 
     function entrar(event){
         event.preventDefault();
         setClicado(true);
-        const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", usuario);
-        requisicao.then(() => navigate("/hoje")) ;
+        const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", login);
+        requisicao.then((res) => {setUsuario(res.data); navigate("/hoje"); }) ;
         requisicao.catch((res) => {alert(res.response.data.message); setClicado(false);}) ;
     }
     return(
         <Conatiner>
             <img src={logo} alt="Logo"/>
             <Formulario onSubmit={entrar} clicado={clicado}>
-                <input disabled={clicado} required type="email" placeholder="email" value={usuario.email} onChange={e => setUsuario({...usuario, email: e.target.value})}/>
-                <input disabled={clicado} required type="password" placeholder="senha" value={usuario.password} onChange={e => setUsuario({...usuario, password: e.target.value} )}/>
+                <input disabled={clicado} required type="email" placeholder="email" value={login.email} onChange={e => setLogin({...login, email: e.target.value})}/>
+                <input disabled={clicado} required type="password" placeholder="senha" value={login.password} onChange={e => setLogin({...login, password: e.target.value} )}/>
                 <button disabled={clicado} type="submit">
                     <div>Entrar</div>
                     <ThreeDots 
