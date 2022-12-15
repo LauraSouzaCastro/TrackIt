@@ -6,18 +6,19 @@ import { useContext } from 'react';
 import { UsuarioContext } from './UsuarioContext.js';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login(){
     const [clicado, setClicado] = useState(false);
     const {usuario, setUsuario} = useContext(UsuarioContext);
+    const navigate = useNavigate();
+
     function entrar(event){
         event.preventDefault();
         setClicado(true);
-        console.log(usuario);
-
         const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", usuario);
-        requisicao.then((res) => console.log(res.data)) ;
-        requisicao.catch(() => {alert("Dados não encontrados ou incorretos!"); setClicado(false);}) ;
+        requisicao.then(() => navigate("/hoje")) ;
+        requisicao.catch((res) => {alert(res.response.data.message); setClicado(false);}) ;
     }
     return(
         <Conatiner>
