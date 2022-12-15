@@ -2,19 +2,29 @@ import { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { ThreeDots } from  'react-loader-spinner'
+import { useContext } from 'react';
+import { UsuarioContext } from './UsuarioContext.js';
+import axios from 'axios';
+import { Link } from "react-router-dom";
 
 export default function Login(){
     const [clicado, setClicado] = useState(false);
+    const {usuario, setUsuario} = useContext(UsuarioContext);
     function entrar(event){
         event.preventDefault();
         setClicado(true);
+        console.log(usuario);
+
+        const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", usuario);
+        requisicao.then((res) => console.log(res.data)) ;
+        requisicao.catch(() => {alert("Dados não encontrados ou incorretos!"); setClicado(false);}) ;
     }
     return(
         <Conatiner>
             <img src={logo} alt="Logo"/>
             <Formulario onSubmit={entrar} clicado={clicado}>
-                <input disabled={clicado} required type="text" placeholder="email"/>
-                <input disabled={clicado} required type="password" placeholder="senha"/>
+                <input disabled={clicado} required type="text" placeholder="email" value={usuario.email} onChange={e => setUsuario({...usuario, email: e.target.value})}/>
+                <input disabled={clicado} required type="password" placeholder="senha" value={usuario.password} onChange={e => setUsuario({...usuario, password: e.target.value} )}/>
                 <button disabled={clicado} type="submit">
                     <div>Entrar</div>
                     <ThreeDots 
@@ -29,8 +39,7 @@ export default function Login(){
                     />
                 </button>
             </Formulario>
-            <p>Não tem uma conta? Cadastre-se!</p>
-            
+            <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
         </Conatiner>
     );
 }
