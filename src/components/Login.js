@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { ThreeDots } from  'react-loader-spinner';
@@ -13,7 +13,9 @@ export default function Login(){
     const [login, setLogin] = useState({email: "", password: ""});
     const {setUsuario} = useContext(UsuarioContext);
     const navigate = useNavigate();
-
+    useEffect(() => { 
+        setUsuario({email: "", id: "", image: "", name: "", password: "", token:""});
+    }, []);
     function entrar(event){
         event.preventDefault();
         setClicado(true);
