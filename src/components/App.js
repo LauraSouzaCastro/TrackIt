@@ -21,11 +21,7 @@ export default function App() {
               <Hoje />
             </UsuarioContext.Provider>
           } />
-          <Route path="/cadastro" element={
-            <UsuarioContext.Provider value={{usuario, setUsuario}}>
-              <Cadastro />
-            </UsuarioContext.Provider>
-          } />
+          <Route path="/cadastro" element={<Cadastro />} />
         </Routes>
     </BrowserRouter>
     

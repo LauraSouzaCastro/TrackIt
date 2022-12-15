@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-import { ThreeDots } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner';
 import { useContext } from 'react';
 import { UsuarioContext } from './UsuarioContext.js';
 import axios from 'axios';
@@ -23,7 +23,7 @@ export default function Login(){
         <Conatiner>
             <img src={logo} alt="Logo"/>
             <Formulario onSubmit={entrar} clicado={clicado}>
-                <input disabled={clicado} required type="text" placeholder="email" value={usuario.email} onChange={e => setUsuario({...usuario, email: e.target.value})}/>
+                <input disabled={clicado} required type="email" placeholder="email" value={usuario.email} onChange={e => setUsuario({...usuario, email: e.target.value})}/>
                 <input disabled={clicado} required type="password" placeholder="senha" value={usuario.password} onChange={e => setUsuario({...usuario, password: e.target.value} )}/>
                 <button disabled={clicado} type="submit">
                     <div>Entrar</div>
