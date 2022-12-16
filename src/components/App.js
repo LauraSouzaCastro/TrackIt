@@ -3,7 +3,7 @@ import GlobalStyle from './globalStyles';
 import Login from "./Login";
 import { useState } from 'react';
 import { UsuarioContext } from './UsuarioContext.js';
-import { HabitosContext } from './HabitosContext.js';
+import { HabitosConcluidosContext } from './HabitosConcluidosContext.js';
 import Hoje from "./Hoje";
 import Habitos from "./Habitos";
 import Historico from "./Historico";
@@ -13,7 +13,7 @@ import Menu from "./Menu";
 
 export default function App() {
   const [usuario, setUsuario] = useState({ email: "", id: "", image: "", name: "", password: "", token: "" });
-  const [habitos, setHabitos] = useState([]);
+  const [habitosConcluidos, setHabitosConcluidos] = useState({});
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -21,9 +21,9 @@ export default function App() {
         <Topo />
       </UsuarioContext.Provider>
       <UsuarioContext.Provider value={{ usuario }}>
-        <HabitosContext.Provider value={{ habitos }}>
+        <HabitosConcluidosContext.Provider value={{ habitosConcluidos }}>
           <Menu />
-        </HabitosContext.Provider>
+        </HabitosConcluidosContext.Provider>
       </UsuarioContext.Provider>
       <Routes>
         <Route path="/" element={
@@ -31,12 +31,18 @@ export default function App() {
             <Login />
           </UsuarioContext.Provider>
         } />
-        <Route path="/hoje" element={<Hoje />} />
+        <Route path="/hoje" element={
+          <UsuarioContext.Provider value={{ usuario }}>
+            <HabitosConcluidosContext.Provider value={{ habitosConcluidos, setHabitosConcluidos }}>
+              <Hoje />
+            </HabitosConcluidosContext.Provider>
+          </UsuarioContext.Provider>
+        } />
         <Route path="/habitos" element={
           <UsuarioContext.Provider value={{ usuario }}>
-            <HabitosContext.Provider value={{ habitos, setHabitos }}>
+            <HabitosConcluidosContext.Provider value={{ habitosConcluidos, setHabitosConcluidos}}>
               <Habitos />
-            </HabitosContext.Provider>
+            </HabitosConcluidosContext.Provider>
           </UsuarioContext.Provider>
         } />
         <Route path="/historico" element={<Historico />} />

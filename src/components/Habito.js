@@ -1,11 +1,9 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { HabitosContext } from './HabitosContext.js';
 import { UsuarioContext } from './UsuarioContext.js';
 import axios from 'axios';
 
-export default function Habito({ dias, atualiza }) {
-    const { habitos } = useContext(HabitosContext);
+export default function Habito({ dias, atualiza, habitos }) {
     const { usuario } = useContext(UsuarioContext);
     function apagar(h) {
         if (window.confirm('Gostaria de apagar este hábito?')) {

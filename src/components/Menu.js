@@ -1,5 +1,5 @@
 import { UsuarioContext } from './UsuarioContext.js';
-import { HabitosContext } from './HabitosContext.js';
+import { HabitosConcluidosContext } from './HabitosConcluidosContext.js';
 import { useContext } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -8,8 +8,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 export default function Menu(){
     const {usuario} = useContext(UsuarioContext);
-    const {habitos} = useContext(HabitosContext);
-    console.log(habitos);
+    const {habitosConcluidos} = useContext(HabitosConcluidosContext);
     return(
         <ContainerMenu id={usuario.id}>
             <Link to="/habitos"><Botao>Hábitos</Botao></Link>
@@ -17,7 +16,7 @@ export default function Menu(){
                 <BotaoHoje>
                     <div>
                         <CircularProgressbar
-                            value={10}
+                            value={habitosConcluidos.total === 0 ? "0" : Math.round((habitosConcluidos.feitos/habitosConcluidos.total)*100)}
                             text="Hoje"
                             styles={buildStyles({
                                 textSize: '22px',
@@ -25,9 +24,9 @@ export default function Menu(){
                                 pathColor: '#FFFFFF',
                                 textColor: '#FFFFFF',
                                 trailColor: '#52B6FF',
-                                backgroundColor: '#52B6FF',
+                                backgroundColor: '#52B6FF'
                             })}
-                            />;
+                            />
                     </div>
                 </BotaoHoje>
             </Link>
@@ -72,6 +71,9 @@ const BotaoHoje = styled.div`
     align-items: center;
     justify-content: center;
     div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 80px;
         height: 80px;
     }
