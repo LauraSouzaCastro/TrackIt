@@ -15,7 +15,7 @@ export default function Login(){
     const navigate = useNavigate();
     useEffect(() => { 
         setUsuario({email: "", id: "", image: "", name: "", password: "", token:""});
-    }, []);
+    }, [setUsuario]);
     function entrar(event){
         event.preventDefault();
         setClicado(true);

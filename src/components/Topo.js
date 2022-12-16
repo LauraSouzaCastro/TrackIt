@@ -24,6 +24,7 @@ const ContainerTopo = styled.div`
   display: ${props => props.id === "" ? "none" : "flex"};
   padding: 10px 18px;
   justify-content: space-between;
+  z-index: 100;
   h1{
     font-family: 'Playball', cursive;
     font-size: 38.982px;
