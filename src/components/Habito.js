@@ -43,7 +43,7 @@ const BotaoLetra = styled.button`
 `;
 
 const ContainerHabito = styled.div`
-    width: 340px;
+    width: 100%;
     height: 91px;
     background: #FFFFFF;
     border-radius: 5px;

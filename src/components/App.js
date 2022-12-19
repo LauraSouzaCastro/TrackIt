@@ -15,41 +15,22 @@ export default function App() {
   const [usuario, setUsuario] = useState({ email: "", id: "", image: "", name: "", password: "", token: "" });
   const [habitosConcluidos, setHabitosConcluidos] = useState({});
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <UsuarioContext.Provider value={{ usuario }}>
-        <Topo />
-      </UsuarioContext.Provider>
-      <UsuarioContext.Provider value={{ usuario }}>
-        <HabitosConcluidosContext.Provider value={{ habitosConcluidos }}>
+    <UsuarioContext.Provider value={{ usuario, setUsuario }}>
+      <HabitosConcluidosContext.Provider value={{ habitosConcluidos, setHabitosConcluidos }}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <Topo />
           <Menu />
-        </HabitosConcluidosContext.Provider>
-      </UsuarioContext.Provider>
-      <Routes>
-        <Route path="/" element={
-          <UsuarioContext.Provider value={{ setUsuario }}>
-            <Login />
-          </UsuarioContext.Provider>
-        } />
-        <Route path="/hoje" element={
-          <UsuarioContext.Provider value={{ usuario }}>
-            <HabitosConcluidosContext.Provider value={{ habitosConcluidos, setHabitosConcluidos }}>
-              <Hoje />
-            </HabitosConcluidosContext.Provider>
-          </UsuarioContext.Provider>
-        } />
-        <Route path="/habitos" element={
-          <UsuarioContext.Provider value={{ usuario }}>
-            <HabitosConcluidosContext.Provider value={{ habitosConcluidos, setHabitosConcluidos}}>
-              <Habitos />
-            </HabitosConcluidosContext.Provider>
-          </UsuarioContext.Provider>
-        } />
-        <Route path="/historico" element={<Historico />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-      </Routes>
-    </BrowserRouter>
-
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/hoje" element={<Hoje />} />
+            <Route path="/habitos" element={<Habitos />} />
+            <Route path="/historico" element={<Historico />} />
+            <Route path="/cadastro" element={<Cadastro />} />
+          </Routes>
+        </BrowserRouter>
+      </HabitosConcluidosContext.Provider>
+    </UsuarioContext.Provider>
   );
 }
 

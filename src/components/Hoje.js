@@ -37,6 +37,7 @@ export default function Hoje() {
             setHabitosConcluidos({ ...novoObjeto });
         });
         requisicao.catch((res) => { alert(res.response.data.message); });
+        console.log(habitosHoje)
     }
     function dia() {
         let nomeDia = '';
@@ -72,7 +73,7 @@ export default function Hoje() {
     return (
         <ContainerHoje habitosConcluidos={habitosConcluidos}>
             {dia()}
-            <p>{habitosConcluidos.feitos === 0 ? "Nenhum hábito concluído ainda" : `${Math.round((habitosConcluidos.feitos / habitosConcluidos.total) * 100)}% dos hábitos concluídos`}</p>
+            <p>{(habitosConcluidos.feitos === 0 ||  isNaN(habitosConcluidos.feitos))? "Nenhum hábito concluído ainda" : `${Math.round((habitosConcluidos.feitos / habitosConcluidos.total) * 100)}% dos hábitos concluídos`}</p>
             {habitosHoje.map((h) => <ConatinerHabito key={h.id} feito={h.done} recorde={h.highestSequence === h.currentSequence}><div><h1>{h.name}</h1><h2>Sequência atual: <span>{h.currentSequence} dias</span></h2><h3>Seu recorde: <span>{h.highestSequence} dias</span></h3></div><button onClick={() => clicar(h)}><ion-icon name="checkmark-outline"></ion-icon></button></ConatinerHabito>)}
         </ContainerHoje>
     );
@@ -94,13 +95,13 @@ const ContainerHoje = styled.div`
         font-family: 'Lexend Deca', sans-serif;
         font-size: 17.976px;
         line-height: 22px;
-        color: ${props => props.habitosConcluidos.feitos === 0 ? "#BABABA" : "#8FC549"};
+        color: ${props => (props.habitosConcluidos.feitos === 0 ||  isNaN(props.habitosConcluidos.feitos))? "#BABABA" : "#8FC549"};
         margin-bottom: 28px;
     }
 `;
 
 const ConatinerHabito = styled.div`
-    width: 340px;
+    width: 100%;
     height: 94px;
     background-color: #FFFFFF;
     border-radius: 5px;
