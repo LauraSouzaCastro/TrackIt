@@ -34,7 +34,7 @@ export default function Formulario({ dias, containerCriar, setContainerCriar, at
     }
     return (
         <ContainerFormulario onSubmit={criar} containerCriar={containerCriar} clicado={clicado} data-test="habit-create-container">
-            <input disabled={clicado} required type="text" placeholder="nome do hábito" value={habito.name} onChange={e => setHabito({ ...habito, name: e.target.value })} data-test="habit-name-input"></input>
+            <input disabled={clicado} type="text" placeholder="nome do hábito" value={habito.name} onChange={e => setHabito({ ...habito, name: e.target.value })} data-test="habit-name-input"></input>
             <div>{dias.map((d) => <BotaoLetra disabled={clicado} key={d.id} type="button" selecionado={habito.days.includes(d.id)} onClick={() => selecionarDia(d)} data-test="habit-day">{d.nome}</BotaoLetra>)}</div>
             <ContainerBotoes>
                 <BotaoCancelar disabled={clicado} type="button" onClick={() => setContainerCriar(!containerCriar)} data-test="habit-create-cancel-btn">Cancelar</BotaoCancelar>
