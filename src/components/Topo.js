@@ -1,16 +1,16 @@
-import { UsuarioContext } from './UsuarioContext.js';
+import { UsuarioContext } from '../contexts/UsuarioContext.js';
 import { useContext } from 'react';
 import styled from "styled-components";
 
-export default function Topo(){
-    const {usuario} = useContext(UsuarioContext);
-    return(
-        <ContainerTopo id={usuario.id}>
-            <h1>TrackIt</h1>
-            <img src={usuario.image} alt=""/>
-        </ContainerTopo>
+export default function Topo() {
+  const { usuario } = useContext(UsuarioContext);
+  return (
+    <ContainerTopo id={usuario.id} data-test="header">
+      <h1>TrackIt</h1>
+      <img src={usuario.image} alt="" />
+    </ContainerTopo>
 
-    );
+  );
 }
 
 const ContainerTopo = styled.div`

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import { useContext, useState, useEffect } from 'react';
-import { UsuarioContext } from './UsuarioContext.js';
-import { HabitosConcluidosContext } from './HabitosConcluidosContext.js';
+import { UsuarioContext } from '../contexts/UsuarioContext.js';
+import { HabitosConcluidosContext } from '../contexts/HabitosConcluidosContext.js';
 import dayjs from 'dayjs';
 export default function Hoje() {
     const { habitosConcluidos, setHabitosConcluidos } = useContext(HabitosConcluidosContext);
@@ -23,7 +23,7 @@ export default function Hoje() {
         let requisicao;
         if (h.done === false) {
             requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}/check`, {}, { headers: { 'Authorization': `Bearer ${usuario.token}` } });
-        }else{
+        } else {
             requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}/uncheck`, {}, { headers: { 'Authorization': `Bearer ${usuario.token}` } });
         }
         requisicao.then(() => atualiza());
@@ -37,7 +37,6 @@ export default function Hoje() {
             setHabitosConcluidos({ ...novoObjeto });
         });
         requisicao.catch((res) => { alert(res.response.data.message); });
-        console.log(habitosHoje)
     }
     function dia() {
         let nomeDia = '';
@@ -67,14 +66,14 @@ export default function Hoje() {
                 break;
         }
         return (
-            <h1>{nomeDia}, {dayjs().date()}/{dayjs().month() + 1}</h1>
+            <h1 data-test="today">{nomeDia}, {dayjs().date()}/{dayjs().month() + 1}</h1>
         );
     }
     return (
         <ContainerHoje habitosConcluidos={habitosConcluidos}>
             {dia()}
-            <p>{(habitosConcluidos.feitos === 0 ||  isNaN(habitosConcluidos.feitos))? "Nenhum hábito concluído ainda" : `${Math.round((habitosConcluidos.feitos / habitosConcluidos.total) * 100)}% dos hábitos concluídos`}</p>
-            {habitosHoje.map((h) => <ConatinerHabito key={h.id} feito={h.done} recorde={h.highestSequence === h.currentSequence}><div><h1>{h.name}</h1><h2>Sequência atual: <span>{h.currentSequence} dias</span></h2><h3>Seu recorde: <span>{h.highestSequence} dias</span></h3></div><button onClick={() => clicar(h)}><ion-icon name="checkmark-outline"></ion-icon></button></ConatinerHabito>)}
+            <p data-test="today-counter">{(habitosConcluidos.feitos === 0 || isNaN(habitosConcluidos.feitos)) ? "Nenhum hábito concluído ainda" : `${Math.round((habitosConcluidos.feitos / habitosConcluidos.total) * 100)}% dos hábitos concluídos`}</p>
+            {habitosHoje.map((h) => <ConatinerHabito key={h.id} feito={h.done} recorde={h.highestSequence === h.currentSequence} data-test="today-habit-container"><div><h1 data-test="today-habit-name">{h.name}</h1><h2 data-test="today-habit-sequence">Sequência atual: <span>{h.currentSequence} dias</span></h2><h3 data-test="today-habit-record">Seu recorde: <span>{h.highestSequence} dias</span></h3></div><button onClick={() => clicar(h)} data-test="today-habit-check-btn"><ion-icon name="checkmark-outline"></ion-icon></button></ConatinerHabito>)}
         </ContainerHoje>
     );
 }
@@ -95,7 +94,7 @@ const ContainerHoje = styled.div`
         font-family: 'Lexend Deca', sans-serif;
         font-size: 17.976px;
         line-height: 22px;
-        color: ${props => (props.habitosConcluidos.feitos === 0 ||  isNaN(props.habitosConcluidos.feitos))? "#BABABA" : "#8FC549"};
+        color: ${props => (props.habitosConcluidos.feitos === 0 || isNaN(props.habitosConcluidos.feitos)) ? "#BABABA" : "#8FC549"};
         margin-bottom: 28px;
     }
 `;

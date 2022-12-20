@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { UsuarioContext } from './UsuarioContext.js';
+import { UsuarioContext } from '../contexts/UsuarioContext.js';
 import axios from 'axios';
 
 export default function Habito({ dias, atualiza, habitos }) {
@@ -14,12 +14,12 @@ export default function Habito({ dias, atualiza, habitos }) {
     }
     function habito(h) {
         return (
-            <ContainerHabito key={h.id}>
-                <h3>
+            <ContainerHabito key={h.id} data-test="habit-container">
+                <h3 data-test="habit-name">
                     {h.name}
-                    <ion-icon name="trash-outline" onClick={() => apagar(h)}></ion-icon>
+                    <ion-icon name="trash-outline" onClick={() => apagar(h)} data-test="habit-delete-btn"></ion-icon>
                 </h3>
-                {dias.map((d) => <BotaoLetra key={d.id} disabled selecionado={h.days.includes(d.id)}>{d.nome}</BotaoLetra>)}
+                {dias.map((d) => <BotaoLetra key={d.id} disabled selecionado={h.days.includes(d.id)} data-test="habit-day">{d.nome}</BotaoLetra>)}
             </ContainerHabito>
         );
     }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { ThreeDots } from 'react-loader-spinner';
 import { useContext } from 'react';
-import { UsuarioContext } from './UsuarioContext.js';
+import { UsuarioContext } from '../contexts/UsuarioContext.js';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -39,9 +39,9 @@ export default function Login() {
         <Conatiner>
             <img src={logo} alt="Logo" />
             <Formulario onSubmit={entrar} clicado={clicado}>
-                <input disabled={clicado} required type="email" placeholder="email" value={login.email} onChange={e => setLogin({ ...login, email: e.target.value })} />
-                <input disabled={clicado} required type="password" placeholder="senha" value={login.password} onChange={e => setLogin({ ...login, password: e.target.value })} />
-                <button disabled={clicado} type="submit">
+                <input disabled={clicado} required type="email" placeholder="email" value={login.email} onChange={e => setLogin({ ...login, email: e.target.value })} data-test="email-input" />
+                <input disabled={clicado} required type="password" placeholder="senha" value={login.password} onChange={e => setLogin({ ...login, password: e.target.value })} data-test="password-input" />
+                <button disabled={clicado} type="submit" data-test="login-btn">
                     <div>Entrar</div>
                     <ThreeDots
                         height="13"
@@ -55,7 +55,7 @@ export default function Login() {
                     />
                 </button>
             </Formulario>
-            <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
+            <Link to="/cadastro" data-test="signup-link"><p>Não tem uma conta? Cadastre-se!</p></Link>
         </Conatiner>
     );
 }

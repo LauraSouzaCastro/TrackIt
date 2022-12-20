@@ -3,36 +3,36 @@ import styled from "styled-components";
 import { useState } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import { ThreeDots } from  'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from "react-router-dom";
 
-export default function Cadastro(){
+export default function Cadastro() {
     const [clicado, setClicado] = useState(false);
-    const [cadastro, setCadastro] = useState({email: "", name: "", image: "", password: ""});
+    const [cadastro, setCadastro] = useState({ email: "", name: "", image: "", password: "" });
     const navigate = useNavigate();
 
-    function cadastrar(event){
+    function cadastrar(event) {
         event.preventDefault();
         setClicado(true);
         const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", cadastro);
-        requisicao.then(() => navigate("/")) ;
-        requisicao.catch((res) => {alert(res.response.data.message); setClicado(false);}) ;
+        requisicao.then(() => navigate("/"));
+        requisicao.catch((res) => { alert(res.response.data.message); setClicado(false); });
     }
-    return(
+    return (
         <Conatiner>
-            <img src={logo} alt="Logo"/>
+            <img src={logo} alt="Logo" />
             <Formulario onSubmit={cadastrar} clicado={clicado}>
-                <input disabled={clicado} required type="email" placeholder="email" value={cadastro.email} onChange={e => setCadastro({...cadastro, email: e.target.value})}/>
-                <input disabled={clicado} required type="password" placeholder="senha" value={cadastro.password} onChange={e => setCadastro({...cadastro, password: e.target.value} )}/>
-                <input disabled={clicado} required type="text" placeholder="nome" value={cadastro.name} onChange={e => setCadastro({...cadastro, name: e.target.value} )}/>
-                <input disabled={clicado} required type="url" placeholder="foto" value={cadastro.image} onChange={e => setCadastro({...cadastro, image: e.target.value} )}/>
-                <button disabled={clicado} type="submit">
+                <input disabled={clicado} required type="email" placeholder="email" value={cadastro.email} onChange={e => setCadastro({ ...cadastro, email: e.target.value })} data-test="email-input" />
+                <input disabled={clicado} required type="password" placeholder="senha" value={cadastro.password} onChange={e => setCadastro({ ...cadastro, password: e.target.value })} data-test="password-input" />
+                <input disabled={clicado} required type="text" placeholder="nome" value={cadastro.name} onChange={e => setCadastro({ ...cadastro, name: e.target.value })} data-test="user-name-input" />
+                <input disabled={clicado} required type="url" placeholder="foto" value={cadastro.image} onChange={e => setCadastro({ ...cadastro, image: e.target.value })} data-test="user-image-input" />
+                <button disabled={clicado} type="submit" data-test="signup-btn">
                     <div>Cadastrar</div>
-                    <ThreeDots 
-                        height="13" 
-                        width="51" 
+                    <ThreeDots
+                        height="13"
+                        width="51"
                         radius="9"
-                        color="#ffffff" 
+                        color="#ffffff"
                         ariaLabel="three-dots-loading"
                         wrapperStyle={{}}
                         wrapperClassName=""
@@ -40,7 +40,7 @@ export default function Cadastro(){
                     />
                 </button>
             </Formulario>
-            <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
+            <Link to="/" data-test="login-link"><p>Já tem uma conta? Faça login!</p></Link>
         </Conatiner>
     );
 }

@@ -1,22 +1,22 @@
-import { UsuarioContext } from './UsuarioContext.js';
-import { HabitosConcluidosContext } from './HabitosConcluidosContext.js';
+import { UsuarioContext } from '../contexts/UsuarioContext.js';
+import { HabitosConcluidosContext } from '../contexts/HabitosConcluidosContext.js';
 import { useContext } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { CircularProgressbar, buildStyles} from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function Menu(){
-    const {usuario} = useContext(UsuarioContext);
-    const {habitosConcluidos} = useContext(HabitosConcluidosContext);
-    return(
-        <ContainerMenu id={usuario.id}>
-            <Link to="/habitos"><Botao>Hábitos</Botao></Link>
-            <Link to="/hoje">
+export default function Menu() {
+    const { usuario } = useContext(UsuarioContext);
+    const { habitosConcluidos } = useContext(HabitosConcluidosContext);
+    return (
+        <ContainerMenu id={usuario.id} data-test="menu">
+            <Link to="/habitos" data-test="habit-link"><Botao>Hábitos</Botao></Link>
+            <Link to="/hoje" data-test="today-link">
                 <BotaoHoje>
                     <div>
                         <CircularProgressbar
-                            value={habitosConcluidos.total === 0 ? "0" : Math.round((habitosConcluidos.feitos/habitosConcluidos.total)*100)}
+                            value={habitosConcluidos.total === 0 ? "0" : Math.round((habitosConcluidos.feitos / habitosConcluidos.total) * 100)}
                             text="Hoje"
                             styles={buildStyles({
                                 textSize: '22px',
@@ -26,11 +26,11 @@ export default function Menu(){
                                 trailColor: '#52B6FF',
                                 backgroundColor: '#52B6FF'
                             })}
-                            />
+                        />
                     </div>
                 </BotaoHoje>
             </Link>
-            <Link to="/historico"><Botao>Histórico</Botao></Link>
+            <Link to="/historico" data-test="history-link"><Botao>Histórico</Botao></Link>
         </ContainerMenu>
     );
 }
